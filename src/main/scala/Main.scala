@@ -1,12 +1,26 @@
-package HTML_akkaHttpProject
-
-
+package School_Project
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
+import akka.stream.scaladsl.Source
+import akka.util.ByteString
+import akka.http.scaladsl.model._
+import scala.io.Source.fromInputStream
+import akka.actor.ActorSystem
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
+import akka.http.scaladsl.model._
+import akka.http.scaladsl.server.Directives.{entity, _}
+import akka.http.scaladsl.server.{RejectionHandler, Route, ValidationRejection}
+
+import com.typesafe.scalalogging.LazyLogging
+import spray.json.DefaultJsonProtocol
+
+import scala.concurrent.Future
+import scala.io.StdIn
+import scala.util.{Failure, Success, Try}
 
 object WebServer {
   def main(args: Array[String]): Unit = {
@@ -24,9 +38,11 @@ object WebServer {
         }
       }*/
 
-    val s=path("s"){
-      getFromResource("h.html")
-    }
+    val s=
+      get{
+        getFromResource("index1.html")
+      }
+
     val bindingFuture = Http().bindAndHandle(s, "localhost", 8080)
 
     println(s"Server online at http://localhost:8080/")
